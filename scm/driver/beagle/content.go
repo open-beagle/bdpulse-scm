@@ -1,0 +1,46 @@
+package beagle
+
+import (
+	"context"
+	"fmt"
+
+	"github.com/open-beagle/go-scm/scm"
+)
+
+type contentService struct {
+	client *wrapper
+}
+
+func (s *contentService) Find(ctx context.Context, repo, path, ref string) (*scm.Content, *scm.Response, error) {
+	endpoint := fmt.Sprintf("awecloud/ciApi/devops/object/%s?ref=%s&path=%s", repo, ref, path)
+	out := new(scm.Content)
+	res, err := s.client.do(ctx, "GET", endpoint, nil, out)
+	return out, res, err
+}
+
+func (s *contentService) Create(ctx context.Context, repo, path string, params *scm.ContentParams) (*scm.Response, error) {
+	return nil, scm.ErrNotSupported
+
+}
+
+func (s *contentService) Update(ctx context.Context, repo, path string, params *scm.ContentParams) (*scm.Response, error) {
+	return nil, scm.ErrNotSupported
+}
+
+func (s *contentService) Delete(ctx context.Context, repo, path string, params *scm.ContentParams) (*scm.Response, error) {
+	return nil, scm.ErrNotSupported
+}
+
+func (s *contentService) List(ctx context.Context, repo, path, ref string, opts scm.ListOptions) ([]*scm.ContentInfo, *scm.Response, error) {
+	return nil, nil, scm.ErrNotSupported
+}
+
+// type content struct {
+// 	FilePath     string `json:"filePath"`
+// 	Encoding     string `json:"encoding"`
+// 	Content      string `json:"content"`
+// 	Ref          string `json:"ref"`
+// 	BlobID       string `json:"blobId"`
+// 	CommitID     string `json:"commitId"`
+// 	LastCommitID string `json:"lastCommitId"`
+// }

@@ -1,0 +1,8 @@
+*.bak
+*.env
+*.out
+_*.md
+.vscode
+.idea
+cmd
+.vscode
