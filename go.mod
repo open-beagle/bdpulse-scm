@@ -1,4 +1,4 @@
-module github.com/open-beagle/drone-go-scm
+module github.com/open-beagle/go-scm
 
 go 1.24.0
 
