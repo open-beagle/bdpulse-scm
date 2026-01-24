@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.24.1] - 2026-01-24
+## [v1.24.2] - 2026-01-24
 
 ### Changed
 
@@ -49,7 +49,7 @@ Or update your `go.mod`:
 require github.com/drone/go-scm v1.24.0
 
 // After
-require github.com/open-beagle/go-scm v1.24.1
+require github.com/open-beagle/go-scm v1.24.2
 ```
 
 Then run:

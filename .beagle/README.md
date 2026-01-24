@@ -1,12 +1,12 @@
 # version
 
-Current version: **v1.24.1**
+Current version: **v1.24.2**
 
 Based on upstream: [drone/go-scm](https://github.com/drone/go-scm)
 
 ## Changelog
 
-### v1.24.1 (2026-01-24)
+### v1.24.2 (2026-01-24)
 
 - Migrated module path from `github.com/drone/go-scm` to `github.com/open-beagle/go-scm`
 - Removed all unit test files
@@ -30,20 +30,23 @@ git merge v1.24.0
 ## Release
 
 ```bash
+# build test
+go build ./...
+
 # Create a release tag
-git tag v1.24.1
+git tag v1.24.2
 
 # Push tag (use -f to force update)
-git push -f origin v1.24.1
+git push -f origin v1.24.2
 
 # Delete local tag
-git tag -d v1.24.1
+git tag -d v1.24.2
 
 # Delete remote tag
-git push origin :refs/tags/v1.24.1
+git push origin :refs/tags/v1.24.2
 ```
 
 ## Version History
 
-- **v1.24.1**: Current version with open-beagle migration
+- **v1.24.2**: Current version with open-beagle migration
 - **v1.24.0-beagle**: Previous version based on upstream v1.24.0
