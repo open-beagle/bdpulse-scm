@@ -137,7 +137,8 @@ func (c *Client) Do(ctx context.Context, in *Request) (*Response, error) {
 	}
 
 	// creates a new http request with context.
-	req, err := http.NewRequest(in.Method, uri.String(), in.Body)
+	// Use NewRequestWithContext to ensure trace information is properly propagated.
+	req, err := http.NewRequestWithContext(ctx, in.Method, uri.String(), in.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -149,8 +150,6 @@ func (c *Client) Do(ctx context.Context, in *Request) (*Response, error) {
 		// 正确：req.URL.Opaque = "//host/api/v4/..." 会保留 host
 		req.URL.Opaque = "//" + req.URL.Host + strings.Split(req.URL.RawPath, "?")[0]
 	}
-
-	req = req.WithContext(ctx)
 	if in.Header != nil {
 		req.Header = in.Header
 	}

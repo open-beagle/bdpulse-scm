@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.24.3] - 2026-01-25
+
+### Fixed
+
+- **HTTP Tracing**: Fixed OpenTelemetry trace propagation issue by replacing `http.NewRequest` with `http.NewRequestWithContext`
+  - Updated `scm/client.go`: Now uses `http.NewRequestWithContext` to ensure trace context is properly propagated from the start
+  - Updated `scm/transport/oauth2/refresh.go`: OAuth2 token refresh requests now correctly propagate trace information
+  - This fix ensures that when HTTP Transport is wrapped with `otelhttp`, trace information can be properly extracted from context
+
+### Technical Details
+
+Previously, the code created HTTP requests using `http.NewRequest` and then added context via `req.WithContext(ctx)`. This pattern prevented OpenTelemetry from extracting trace information during request creation. The fix ensures trace spans are correctly propagated through all HTTP calls made by the SCM client.
+
 ## [v1.24.2] - 2026-01-24
 
 ### Changed

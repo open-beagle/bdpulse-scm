@@ -62,7 +62,12 @@ func (t *Refresher) Refresh(token *scm.Token) error {
 	reader := strings.NewReader(
 		values.Encode(),
 	)
-	req, err := http.NewRequest("POST", t.Endpoint, reader)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	// Use NewRequestWithContext to ensure trace information is properly propagated.
+	req, err := http.NewRequestWithContext(ctx, "POST", t.Endpoint, reader)
 	if err != nil {
 		return err
 	}
@@ -72,10 +77,8 @@ func (t *Refresher) Refresh(token *scm.Token) error {
 	}
 
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
 
-	res, err := t.client().Do(req.WithContext(ctx))
+	res, err := t.client().Do(req)
 	if err != nil {
 		return err
 	}
