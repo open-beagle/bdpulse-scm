@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.24.4] - 2026-01-27
+
+### Fixed
+
+- **OAuth2 Tracing**: Fixed trace context loss during token refresh
+  - Updated `scm/transport/oauth2`: `Refresher.Refresh` method now accepts `context.Context` to correctly propagate trace information from the parent request
+  - Ensuring that automatic token refreshes do not create isolated spans
+
 ## [v1.24.3] - 2026-01-25
 
 ### Fixed

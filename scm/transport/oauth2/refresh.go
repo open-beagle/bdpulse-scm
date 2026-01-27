@@ -41,7 +41,7 @@ func (t *Refresher) Token(ctx context.Context) (*scm.Token, error) {
 	if !expired(token) {
 		return token, nil
 	}
-	err = t.Refresh(token)
+	err = t.Refresh(ctx, token)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (t *Refresher) Token(ctx context.Context) (*scm.Token, error) {
 }
 
 // Refresh refreshes the expired token.
-func (t *Refresher) Refresh(token *scm.Token) error {
+func (t *Refresher) Refresh(ctx context.Context, token *scm.Token) error {
 
 	values := url.Values{}
 
@@ -63,7 +63,7 @@ func (t *Refresher) Refresh(token *scm.Token) error {
 		values.Encode(),
 	)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
 	// Use NewRequestWithContext to ensure trace information is properly propagated.

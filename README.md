@@ -2,7 +2,7 @@
 
 [![Go Doc](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=flat-square)](https://pkg.go.dev/github.com/open-beagle/go-scm/scm)
 [![Go Report Card](https://goreportcard.com/badge/github.com/open-beagle/go-scm)](https://goreportcard.com/report/github.com/open-beagle/go-scm)
-[![Version](https://img.shields.io/badge/version-v1.24.2--beagle-blue.svg)](https://github.com/open-beagle/go-scm/releases)
+[![Version](https://img.shields.io/badge/version-v1.24.4--beagle-blue.svg)](https://github.com/open-beagle/go-scm/releases)
 
 Package scm provides a unified interface to multiple source code management systems including GitHub, GitHub Enterprise, Bitbucket, Bitbucket Server, Gitee, Gitea, Gogs, GitLab, Azure DevOps and Stash.
 
