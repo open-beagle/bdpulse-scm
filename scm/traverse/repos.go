@@ -3,7 +3,7 @@ package traverse
 import (
 	"context"
 
-	"github.com/open-beagle/go-scm/scm"
+	"github.com/open-beagle/bdpulse-scm/scm"
 )
 
 // Repos returns the full repository list, traversing and

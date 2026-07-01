@@ -27,7 +27,7 @@ Previously, the code created HTTP requests using `http.NewRequest` and then adde
 
 ### Changed
 
-- **BREAKING**: Migrated module path from `github.com/drone/go-scm` to `github.com/open-beagle/go-scm`
+- **BREAKING**: Migrated module path from `github.com/drone/go-scm` to `github.com/open-beagle/bdpulse-scm`
 - Updated all import paths across the codebase
 - Removed all unit test files (`*_test.go`)
 - Removed copyright headers from all source files
@@ -60,7 +60,7 @@ If you're upgrading from `github.com/drone/go-scm`, you need to update all impor
 
 ```bash
 # Using find and sed
-find . -name "*.go" -type f -exec sed -i 's|github.com/drone/go-scm|github.com/open-beagle/go-scm|g' {} +
+find . -name "*.go" -type f -exec sed -i 's|github.com/drone/go-scm|github.com/open-beagle/bdpulse-scm|g' {} +
 ```
 
 Or update your `go.mod`:
@@ -70,7 +70,7 @@ Or update your `go.mod`:
 require github.com/drone/go-scm v1.24.0
 
 // After
-require github.com/open-beagle/go-scm v1.24.2
+require github.com/open-beagle/bdpulse-scm v1.24.2
 ```
 
 Then run:

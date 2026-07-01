@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/open-beagle/go-scm/scm"
-	"github.com/open-beagle/go-scm/scm/driver/internal/null"
+	"github.com/open-beagle/bdpulse-scm/scm"
+	"github.com/open-beagle/bdpulse-scm/scm/driver/internal/null"
 )
 
 type webhookService struct {

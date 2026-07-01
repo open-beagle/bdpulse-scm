@@ -3,8 +3,8 @@ package oauth2
 import (
 	"net/http"
 
-	"github.com/open-beagle/go-scm/scm"
-	"github.com/open-beagle/go-scm/scm/transport/internal"
+	"github.com/open-beagle/bdpulse-scm/scm"
+	"github.com/open-beagle/bdpulse-scm/scm/transport/internal"
 )
 
 // Supported authentication schemes. Note that Gogs and

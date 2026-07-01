@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/open-beagle/go-scm/scm"
-	"github.com/open-beagle/go-scm/scm/transport/internal"
+	"github.com/open-beagle/bdpulse-scm/scm"
+	"github.com/open-beagle/bdpulse-scm/scm/transport/internal"
 )
 
 // clock provides a interface for current time providers. A Clock can be used

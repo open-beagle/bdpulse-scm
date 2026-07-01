@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/open-beagle/go-scm/scm"
+	"github.com/open-beagle/bdpulse-scm/scm"
 )
 
 func encodeListOptions(opts scm.ListOptions) string {

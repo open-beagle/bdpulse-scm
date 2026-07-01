@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/open-beagle/go-scm/scm"
-	"github.com/open-beagle/go-scm/scm/driver/beagle"
-	"github.com/open-beagle/go-scm/scm/transport/oauth2"
+	"github.com/open-beagle/bdpulse-scm/scm"
+	"github.com/open-beagle/bdpulse-scm/scm/driver/beagle"
+	"github.com/open-beagle/bdpulse-scm/scm/transport/oauth2"
 )
 
 func main() {

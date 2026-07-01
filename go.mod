@@ -1,4 +1,4 @@
-module github.com/open-beagle/go-scm
+module github.com/open-beagle/bdpulse-scm
 
 go 1.24.0
 

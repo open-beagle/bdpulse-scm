@@ -9,9 +9,9 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/open-beagle/go-scm/scm"
-	"github.com/open-beagle/go-scm/scm/driver/internal/hmac"
-	"github.com/open-beagle/go-scm/scm/driver/internal/null"
+	"github.com/open-beagle/bdpulse-scm/scm"
+	"github.com/open-beagle/bdpulse-scm/scm/driver/internal/hmac"
+	"github.com/open-beagle/bdpulse-scm/scm/driver/internal/null"
 )
 
 type webhookService struct {
@@ -361,7 +361,7 @@ func convertPushHook(src *pushHook) *scm.PushHook {
 		Sender:  *convertUser(&src.Sender),
 		Commits: commits,
 	}
-	// fix https://github.com/open-beagle/go-scm/issues/8
+	// fix https://github.com/open-beagle/bdpulse-scm/issues/8
 	if scm.IsTag(dst.Ref) && src.Head.ID != "" {
 		dst.Commit.Sha = src.Head.ID
 		dst.After = src.Head.ID

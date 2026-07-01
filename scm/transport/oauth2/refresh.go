@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/open-beagle/go-scm/scm"
+	"github.com/open-beagle/bdpulse-scm/scm"
 )
 
 // expiryDelta determines how earlier a token should be considered

@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/open-beagle/go-scm/scm"
+	"github.com/open-beagle/bdpulse-scm/scm"
 )
 
 type webhookService struct {

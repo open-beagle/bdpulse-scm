@@ -1,8 +1,8 @@
 # go-scm
 
-[![Go Doc](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=flat-square)](https://pkg.go.dev/github.com/open-beagle/go-scm/scm)
-[![Go Report Card](https://goreportcard.com/badge/github.com/open-beagle/go-scm)](https://goreportcard.com/report/github.com/open-beagle/go-scm)
-[![Version](https://img.shields.io/badge/version-v1.24.4--beagle-blue.svg)](https://github.com/open-beagle/go-scm/releases)
+[![Go Doc](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=flat-square)](https://pkg.go.dev/github.com/open-beagle/bdpulse-scm/scm)
+[![Go Report Card](https://goreportcard.com/badge/github.com/open-beagle/bdpulse-scm)](https://goreportcard.com/report/github.com/open-beagle/bdpulse-scm)
+[![Version](https://img.shields.io/badge/version-v1.24.4--beagle-blue.svg)](https://github.com/open-beagle/bdpulse-scm/releases)
 
 Package scm provides a unified interface to multiple source code management systems including GitHub, GitHub Enterprise, Bitbucket, Bitbucket Server, Gitee, Gitea, Gogs, GitLab, Azure DevOps and Stash.
 
@@ -31,7 +31,7 @@ Package scm provides a unified interface to multiple source code management syst
 ## Installation
 
 ```bash
-go get github.com/open-beagle/go-scm
+go get github.com/open-beagle/bdpulse-scm
 ```
 
 ## Quick Start
@@ -43,8 +43,8 @@ package main
 
 import (
     "context"
-    "github.com/open-beagle/go-scm/scm"
-    "github.com/open-beagle/go-scm/scm/driver/github"
+    "github.com/open-beagle/bdpulse-scm/scm"
+    "github.com/open-beagle/bdpulse-scm/scm/driver/github"
 )
 
 func main() {
@@ -64,7 +64,7 @@ func main() {
 
 ```go
 import (
-    "github.com/open-beagle/go-scm/scm/driver/github"
+    "github.com/open-beagle/bdpulse-scm/scm/driver/github"
 )
 
 func main() {
@@ -79,7 +79,7 @@ func main() {
 
 ```go
 import (
-    "github.com/open-beagle/go-scm/scm/driver/gitlab"
+    "github.com/open-beagle/bdpulse-scm/scm/driver/gitlab"
 )
 
 func main() {
@@ -93,7 +93,7 @@ func main() {
 
 ```go
 import (
-    "github.com/open-beagle/go-scm/scm/driver/bitbucket"
+    "github.com/open-beagle/bdpulse-scm/scm/driver/bitbucket"
 )
 
 func main() {
@@ -105,7 +105,7 @@ func main() {
 
 ```go
 import (
-    "github.com/open-beagle/go-scm/scm/driver/stash"
+    "github.com/open-beagle/bdpulse-scm/scm/driver/stash"
 )
 
 func main() {
@@ -117,7 +117,7 @@ func main() {
 
 ```go
 import (
-    "github.com/open-beagle/go-scm/scm/driver/gitea"
+    "github.com/open-beagle/bdpulse-scm/scm/driver/gitea"
 )
 
 func main() {
@@ -129,7 +129,7 @@ func main() {
 
 ```go
 import (
-    "github.com/open-beagle/go-scm/scm/driver/gitee"
+    "github.com/open-beagle/bdpulse-scm/scm/driver/gitee"
 )
 
 func main() {
@@ -141,7 +141,7 @@ func main() {
 
 ```go
 import (
-    "github.com/open-beagle/go-scm/scm/driver/azure"
+    "github.com/open-beagle/bdpulse-scm/scm/driver/azure"
 )
 
 func main() {
@@ -160,9 +160,9 @@ package main
 
 import (
     "net/http"
-    "github.com/open-beagle/go-scm/scm"
-    "github.com/open-beagle/go-scm/scm/driver/github"
-    "github.com/open-beagle/go-scm/scm/transport/oauth2"
+    "github.com/open-beagle/bdpulse-scm/scm"
+    "github.com/open-beagle/bdpulse-scm/scm/driver/github"
+    "github.com/open-beagle/bdpulse-scm/scm/transport/oauth2"
 )
 
 func main() {
@@ -186,7 +186,7 @@ func main() {
 ```go
 import (
     "net/http"
-    "github.com/open-beagle/go-scm/scm/transport"
+    "github.com/open-beagle/bdpulse-scm/scm/transport"
 )
 
 func main() {
@@ -206,7 +206,7 @@ func main() {
 ```go
 import (
     "net/http"
-    "github.com/open-beagle/go-scm/scm/transport"
+    "github.com/open-beagle/bdpulse-scm/scm/transport"
 )
 
 func main() {

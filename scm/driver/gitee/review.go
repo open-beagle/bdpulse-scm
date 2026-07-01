@@ -3,7 +3,7 @@ package gitee
 import (
 	"context"
 
-	"github.com/open-beagle/go-scm/scm"
+	"github.com/open-beagle/bdpulse-scm/scm"
 )
 
 type reviewService struct {

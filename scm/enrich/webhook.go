@@ -3,7 +3,7 @@ package enrich
 import (
 	"context"
 
-	"github.com/open-beagle/go-scm/scm"
+	"github.com/open-beagle/bdpulse-scm/scm"
 )
 
 // Webhook enriches the webhook payload with missing

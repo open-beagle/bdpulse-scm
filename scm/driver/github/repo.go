@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/open-beagle/go-scm/scm"
+	"github.com/open-beagle/bdpulse-scm/scm"
 )
 
 type repository struct {

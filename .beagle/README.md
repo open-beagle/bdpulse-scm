@@ -12,7 +12,7 @@ Based on upstream: [drone/go-scm](https://github.com/drone/go-scm)
 
 ### v1.24.3 (2026-01-24)
 
-- Migrated module path from `github.com/drone/go-scm` to `github.com/open-beagle/go-scm`
+- Migrated module path from `github.com/drone/go-scm` to `github.com/open-beagle/bdpulse-scm`
 - Removed all unit test files
 - Removed copyright headers
 - Updated README.md with comprehensive documentation

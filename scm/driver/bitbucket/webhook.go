@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/open-beagle/go-scm/scm"
+	"github.com/open-beagle/bdpulse-scm/scm"
 )
 
 // TODO(bradrydzewski) default repository branch is missing in push webhook payloads
