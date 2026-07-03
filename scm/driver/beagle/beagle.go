@@ -1,4 +1,4 @@
-// Package gitlab implements a GitLab client.
+// Package beagle implements a Beagle SCM compatibility client.
 package beagle
 
 import (
@@ -25,8 +25,8 @@ const (
 	errorKey
 )
 
-// New returns a new GitLab API client.
-func New(uri string) (*scm.Client, error) {
+// New returns a new Beagle API client.
+func New(uri string, opts ...Option) (*scm.Client, error) {
 	base, err := url.Parse(uri)
 	if err != nil {
 		return nil, err
@@ -34,7 +34,13 @@ func New(uri string) (*scm.Client, error) {
 	if !strings.HasSuffix(base.Path, "/") {
 		base.Path = base.Path + "/"
 	}
-	client := &wrapper{new(scm.Client)}
+	cfg := new(options)
+	for _, opt := range opts {
+		if opt != nil {
+			opt(cfg)
+		}
+	}
+	client := &wrapper{Client: new(scm.Client), paths: cfg.paths}
 	client.BaseURL = base
 	// initialize services
 	client.Driver = scm.DriverBeagle
@@ -53,11 +59,9 @@ func New(uri string) (*scm.Client, error) {
 	return client.Client, nil
 }
 
-// NewDefault returns a new GitLab API client using the
-// default gitlab.com address.
-
+// NewDefault returns a new Beagle API client without product-specific endpoints.
 func NewDefault() *scm.Client {
-	client, _ := New("https://cloud.wodcloud.com")
+	client, _ := New("http://localhost")
 	return client
 }
 
@@ -65,6 +69,7 @@ func NewDefault() *scm.Client {
 // for making http requests and unmarshaling the response.
 type wrapper struct {
 	*scm.Client
+	paths Paths
 }
 
 // do wraps the Client.Do function by creating the Request and
@@ -112,7 +117,7 @@ func (c *wrapper) do(ctx context.Context, method, path string, in, out interface
 	return res, json.NewDecoder(res.Body).Decode(out)
 }
 
-// Error represents a GitLab error.
+// Error represents a Beagle API error.
 type Error struct {
 	Message string `json:"message"`
 }

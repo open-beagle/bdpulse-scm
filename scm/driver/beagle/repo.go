@@ -2,7 +2,6 @@ package beagle
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/open-beagle/bdpulse-scm/scm"
 )
@@ -16,7 +15,10 @@ func (s *repositoryService) CreateProject(ctx context.Context, params *scm.RepoI
 }
 
 func (s *repositoryService) Find(ctx context.Context, repo string) (*scm.Repository, *scm.Response, error) {
-	path := fmt.Sprintf("awecloud/ciApi/devops/project/%s", repo)
+	path, err := formatPath(s.client.paths.Repository, repo)
+	if err != nil {
+		return nil, nil, err
+	}
 	out := new(scm.Repository)
 	res, err := s.client.do(ctx, "GET", path, nil, out)
 	return out, res, err
@@ -27,18 +29,26 @@ func (s *repositoryService) FindHook(ctx context.Context, repo string, id string
 }
 
 func (s *repositoryService) FindPerms(ctx context.Context, repo string) (*scm.Perm, *scm.Response, error) {
-	path := fmt.Sprintf("awecloud/ciApi/devops/project/%s", repo)
+	path, err := formatPath(s.client.paths.Repository, repo)
+	if err != nil {
+		return nil, nil, err
+	}
 	out := new(scm.Repository)
 	res, err := s.client.do(ctx, "GET", path, nil, out)
 	return out.Perm, res, err
 }
 
 func (s *repositoryService) List(ctx context.Context, opts scm.ListOptions) ([]*scm.Repository, *scm.Response, error) {
-	path := fmt.Sprintf("awecloud/ciApi/devops/project/?%s", encodeMemberListOptions(opts))
+	path, err := formatPath(s.client.paths.RepositoryList, encodeMemberListOptions(opts))
+	if err != nil {
+		return nil, nil, err
+	}
 	out := new(repo)
 	res, err := s.client.do(ctx, "GET", path, nil, &out)
-	res.Page.Next = out.Next
-	res.Page.NextURL = out.NextUrl
+	if res != nil {
+		res.Page.Next = out.Next
+		res.Page.NextURL = out.NextUrl
+	}
 	return out.Data, res, err
 }
 

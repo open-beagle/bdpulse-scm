@@ -12,7 +12,10 @@ type userService struct {
 }
 
 func (s *userService) Find(ctx context.Context) (*scm.User, *scm.Response, error) {
-	path := "awecloud/dex/oauth/getUserInfo"
+	path, err := formatPath(s.client.paths.UserInfo)
+	if err != nil {
+		return nil, nil, err
+	}
 	out := new(user)
 
 	res, err := s.client.do(ctx, "GET", path, nil, out)
@@ -20,7 +23,10 @@ func (s *userService) Find(ctx context.Context) (*scm.User, *scm.Response, error
 }
 
 func (s *userService) FindLogin(ctx context.Context, login string) (*scm.User, *scm.Response, error) {
-	path := "awecloud/dex/oauth/getUserInfo"
+	path, err := formatPath(s.client.paths.UserInfo)
+	if err != nil {
+		return nil, nil, err
+	}
 	out := new(user)
 	res, err := s.client.do(ctx, "GET", path, nil, &out)
 	if err != nil {
@@ -40,7 +46,10 @@ func (s *userService) FindEmail(ctx context.Context) (string, *scm.Response, err
 // 未使用
 func (s *userService) ListEmail(ctx context.Context, opts scm.ListOptions) ([]*scm.Email, *scm.Response, error) {
 	// path := fmt.Sprintf("api/v4/user/emails?%s", encodeListOptions(opts))
-	path := "awecloud/dex/oauth/getUserInfo"
+	path, err := formatPath(s.client.paths.UserInfo)
+	if err != nil {
+		return nil, nil, err
+	}
 	out := new(user)
 	res, err := s.client.do(ctx, "GET", path, nil, &out)
 	o := []*spec{}
@@ -66,7 +75,7 @@ type spec struct {
 	Email string `json:"email"`
 }
 
-// helper function to convert from the gitlab user structure to
+// helper function to convert from the CI-server user structure to
 // the common user structure.
 func convertUser(from *user) *scm.User {
 	return &scm.User{
@@ -77,7 +86,7 @@ func convertUser(from *user) *scm.User {
 	}
 }
 
-// helper function to convert from the gitlab email list to
+// helper function to convert from the CI-server email list to
 // the common email structure.
 func convertEmailList(from []*spec) []*scm.Email {
 	to := []*scm.Email{}
@@ -87,7 +96,7 @@ func convertEmailList(from []*spec) []*scm.Email {
 	return to
 }
 
-// helper function to convert from the gitlab email structure to
+// helper function to convert from the CI-server email structure to
 // the common email structure.
 func convertEmail(from *spec) *scm.Email {
 	return &scm.Email{

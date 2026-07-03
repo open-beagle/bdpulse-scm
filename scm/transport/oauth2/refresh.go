@@ -23,9 +23,10 @@ const expiryDelta = time.Minute
 // IMPORTANT the Refresher is NOT safe for concurrent use
 // by multiple goroutines.
 type Refresher struct {
-	ClientID     string
-	ClientSecret string
-	Endpoint     string
+	ClientID                string
+	ClientSecret            string
+	Endpoint                string
+	ClientCredentialsInBody bool
 
 	Source scm.TokenSource
 	Client *http.Client
@@ -55,7 +56,7 @@ func (t *Refresher) Refresh(ctx context.Context, token *scm.Token) error {
 
 	values.Set("grant_type", "refresh_token")
 	values.Set("refresh_token", token.Refresh)
-	if strings.Contains(t.Endpoint, "awecloud/dex") {
+	if t.ClientCredentialsInBody {
 		values.Set("client_id", t.ClientID)
 		values.Set("client_secret", t.ClientSecret)
 	}
@@ -72,7 +73,7 @@ func (t *Refresher) Refresh(ctx context.Context, token *scm.Token) error {
 		return err
 	}
 
-	if !strings.Contains(t.Endpoint, "awecloud/dex") {
+	if !t.ClientCredentialsInBody {
 		req.SetBasicAuth(t.ClientID, t.ClientSecret)
 	}
 

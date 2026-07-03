@@ -1,6 +1,5 @@
 package beagle
 
-
 import (
 	"encoding/json"
 	"io"

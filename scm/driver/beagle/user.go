@@ -2,7 +2,6 @@ package beagle
 
 import (
 	"context"
-	"fmt"
 	"strings"
 
 	"github.com/open-beagle/bdpulse-scm/scm"
@@ -13,7 +12,10 @@ type userService struct {
 }
 
 func (s *userService) Find(ctx context.Context) (*scm.User, *scm.Response, error) {
-	path := "awecloud/dex/oauth/getUserInfo"
+	path, err := formatPath(s.client.paths.UserInfo)
+	if err != nil {
+		return nil, nil, err
+	}
 	out := new(user)
 
 	res, err := s.client.do(ctx, "GET", path, nil, out)
@@ -21,7 +23,10 @@ func (s *userService) Find(ctx context.Context) (*scm.User, *scm.Response, error
 }
 
 func (s *userService) FindLogin(ctx context.Context, login string) (*scm.User, *scm.Response, error) {
-	path := "awecloud/dex/oauth/getUserInfo"
+	path, err := formatPath(s.client.paths.UserInfo)
+	if err != nil {
+		return nil, nil, err
+	}
 	out := new(user)
 	res, err := s.client.do(ctx, "GET", path, nil, &out)
 	if err != nil {
@@ -39,7 +44,10 @@ func (s *userService) FindEmail(ctx context.Context) (string, *scm.Response, err
 }
 
 func (s *userService) FindNetrc(ctx context.Context, id string) (*scm.Netrc, *scm.Response, error) {
-	path := fmt.Sprintf("awecloud/ciApi/devops/netrc?plat=%s", id)
+	path, err := formatPath(s.client.paths.Netrc, id)
+	if err != nil {
+		return nil, nil, err
+	}
 	out := new(netrc)
 	res, err := s.client.do(ctx, "GET", path, nil, &out)
 	if err != nil {
@@ -51,7 +59,10 @@ func (s *userService) FindNetrc(ctx context.Context, id string) (*scm.Netrc, *sc
 // 未使用
 func (s *userService) ListEmail(ctx context.Context, opts scm.ListOptions) ([]*scm.Email, *scm.Response, error) {
 	// path := fmt.Sprintf("api/v4/user/emails?%s", encodeListOptions(opts))
-	path := "awecloud/dex/oauth/getUserInfo"
+	path, err := formatPath(s.client.paths.UserInfo)
+	if err != nil {
+		return nil, nil, err
+	}
 	out := new(user)
 	res, err := s.client.do(ctx, "GET", path, nil, &out)
 	o := []*spec{}
@@ -78,7 +89,7 @@ type netrc struct {
 	SrcLogin string `json:"login" `
 }
 
-// helper function to convert from the gitlab user structure to
+// helper function to convert from the Beagle user structure to
 // the common user structure.
 func convertUser(from *user) *scm.User {
 	return &scm.User{
@@ -96,7 +107,7 @@ func convertNetrc(from *netrc) *scm.Netrc {
 	}
 }
 
-// helper function to convert from the gitlab email list to
+// helper function to convert from the Beagle email list to
 // the common email structure.
 func convertEmailList(from []*spec) []*scm.Email {
 	to := []*scm.Email{}
@@ -106,7 +117,7 @@ func convertEmailList(from []*spec) []*scm.Email {
 	return to
 }
 
-// helper function to convert from the gitlab email structure to
+// helper function to convert from the Beagle email structure to
 // the common email structure.
 func convertEmail(from *spec) *scm.Email {
 	return &scm.Email{

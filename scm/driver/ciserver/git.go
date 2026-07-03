@@ -2,7 +2,6 @@ package ciserver
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 	"time"
 
@@ -22,7 +21,10 @@ func (s *gitService) FindBranch(ctx context.Context, repo, name string) (*scm.Re
 }
 
 func (s *gitService) FindCommit(ctx context.Context, repo, ref string) (*scm.Commit, *scm.Response, error) {
-	path := fmt.Sprintf("awecloud/ciServer/devops/drone/commit/%s/%s", repo, scm.TrimRef(ref))
+	path, err := formatPath(s.client.paths.Commit, repo, scm.TrimRef(ref))
+	if err != nil {
+		return nil, nil, err
+	}
 	out := new(commit)
 	res, err := s.client.do(ctx, "GET", path, nil, out)
 	return convertCommit(out), res, err
@@ -33,7 +35,10 @@ func (s *gitService) FindTag(ctx context.Context, repo, name string) (*scm.Refer
 }
 
 func (s *gitService) ListBranches(ctx context.Context, repo string, opts scm.ListOptions) ([]*scm.Reference, *scm.Response, error) {
-	path := fmt.Sprintf("awecloud/ciServer/devops/drone/branch/%s", encode(repo))
+	path, err := formatPath(s.client.paths.Branches, encode(repo))
+	if err != nil {
+		return nil, nil, err
+	}
 	out := []*branch{}
 	res, err := s.client.do(ctx, "GET", path, nil, &out)
 	return convertBranchList(out), res, err
@@ -56,7 +61,10 @@ func (s *gitService) CompareChanges(ctx context.Context, repo, source, target st
 }
 
 func (s *gitService) ListGroup(ctx context.Context) ([]*scm.Group, *scm.Response, error) {
-	path := fmt.Sprintf("awecloud/ciServer/devops/drone/group")
+	path, err := formatPath(s.client.paths.Groups)
+	if err != nil {
+		return nil, nil, err
+	}
 	out := []*group{}
 	res, err := s.client.do(ctx, "GET", path, nil, &out)
 	return convertGroupList(out), res, err

@@ -2,7 +2,6 @@ package beagle
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/open-beagle/bdpulse-scm/scm"
 )
@@ -12,7 +11,10 @@ type contentService struct {
 }
 
 func (s *contentService) Find(ctx context.Context, repo, path, ref string) (*scm.Content, *scm.Response, error) {
-	endpoint := fmt.Sprintf("awecloud/ciApi/devops/object/%s?ref=%s&path=%s", repo, ref, path)
+	endpoint, err := formatPath(s.client.paths.Content, repo, ref, path)
+	if err != nil {
+		return nil, nil, err
+	}
 	out := new(scm.Content)
 	res, err := s.client.do(ctx, "GET", endpoint, nil, out)
 	return out, res, err

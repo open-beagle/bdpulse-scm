@@ -3,7 +3,6 @@ package ciserver
 import (
 	"context"
 	"encoding/base64"
-	"fmt"
 	"strings"
 
 	"github.com/open-beagle/bdpulse-scm/scm"
@@ -14,11 +13,17 @@ type contentService struct {
 }
 
 func (s *contentService) Find(ctx context.Context, repo, path, ref string) (*scm.Content, *scm.Response, error) {
-	var endpoint string
+	var (
+		endpoint string
+		err      error
+	)
 	if strings.Contains(repo, "/") {
-		endpoint = fmt.Sprintf("awecloud/ciServer/devops/drone/content/repo/%s?ref=%s&path=%s", repo, ref, path)
+		endpoint, err = formatPath(s.client.paths.ContentBySlug, repo, ref, path)
 	} else {
-		endpoint = fmt.Sprintf("awecloud/ciServer/devops/drone/content/project/%s?ref=%s&path=%s", repo, ref, path)
+		endpoint, err = formatPath(s.client.paths.ContentByID, repo, ref, path)
+	}
+	if err != nil {
+		return nil, nil, err
 	}
 	out := new(content)
 	res, err := s.client.do(ctx, "GET", endpoint, nil, out)
@@ -35,7 +40,10 @@ func (s *contentService) Find(ctx context.Context, repo, path, ref string) (*scm
 }
 
 func (s *contentService) Create(ctx context.Context, repo, path string, params *scm.ContentParams) (*scm.Response, error) {
-	endpoint := fmt.Sprintf("awecloud/ciServer/devops/drone/content/project/%s", encode(repo))
+	endpoint, err := formatPath(s.client.paths.ContentWrite, encode(repo))
+	if err != nil {
+		return nil, err
+	}
 	in := &createUpdateContent{
 		FilePath:      path,
 		Branch:        params.Branch,
@@ -47,7 +55,10 @@ func (s *contentService) Create(ctx context.Context, repo, path string, params *
 }
 
 func (s *contentService) Update(ctx context.Context, repo, path string, params *scm.ContentParams) (*scm.Response, error) {
-	endpoint := fmt.Sprintf("awecloud/ciServer/devops/drone/content/project/%s", encode(repo))
+	endpoint, err := formatPath(s.client.paths.ContentWrite, encode(repo))
+	if err != nil {
+		return nil, err
+	}
 	in := &createUpdateContent{
 		FilePath:      path,
 		Branch:        params.Branch,

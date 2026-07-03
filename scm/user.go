@@ -43,7 +43,7 @@ type (
 		// ListEmail returns the user email list.
 		ListEmail(context.Context, ListOptions) ([]*Email, *Response, error)
 
-		// FindNetrc returns the user netrc by scmid, only beagle driver.
+		// FindNetrc returns netrc credentials when supported by the driver.
 		FindNetrc(context.Context, string) (*Netrc, *Response, error)
 	}
 )

@@ -2,7 +2,6 @@ package ciserver
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -36,7 +35,10 @@ type repositoryService struct {
 }
 
 func (s *repositoryService) CreateProject(ctx context.Context, params *scm.RepoInput) (*scm.Response, error) {
-	path := fmt.Sprintf("awecloud/ciServer/devops/drone/project")
+	path, err := formatPath(s.client.paths.CreateProject)
+	if err != nil {
+		return nil, err
+	}
 	in := &createRepo{
 		Name:       params.Name,
 		NameSpceId: params.Id,
@@ -46,10 +48,14 @@ func (s *repositoryService) CreateProject(ctx context.Context, params *scm.RepoI
 
 func (s *repositoryService) Find(ctx context.Context, repo string) (*scm.Repository, *scm.Response, error) {
 	var path string
+	var err error
 	if strings.Contains(repo, "/") {
-		path = fmt.Sprintf("awecloud/ciServer/devops/drone/repo/%s", repo)
+		path, err = formatPath(s.client.paths.RepositoryBySlug, repo)
 	} else {
-		path = fmt.Sprintf("awecloud/ciServer/devops/drone/project/%s", repo)
+		path, err = formatPath(s.client.paths.RepositoryByID, repo)
+	}
+	if err != nil {
+		return nil, nil, err
 	}
 	out := new(repository)
 	res, err := s.client.do(ctx, "GET", path, nil, out)
@@ -61,19 +67,27 @@ func (s *repositoryService) FindHook(ctx context.Context, repo string, id string
 }
 
 func (s *repositoryService) FindPerms(ctx context.Context, repo string) (*scm.Perm, *scm.Response, error) {
-	path := fmt.Sprintf("awecloud/ciServer/devops/drone/repo/%s", repo)
+	path, err := formatPath(s.client.paths.RepositoryPerms, repo)
+	if err != nil {
+		return nil, nil, err
+	}
 	out := new(repository)
 	res, err := s.client.do(ctx, "GET", path, nil, out)
 	return convertRepository(out).Perm, res, err
 }
 
 func (s *repositoryService) List(ctx context.Context, opts scm.ListOptions) ([]*scm.Repository, *scm.Response, error) {
-	path := fmt.Sprintf("awecloud/ciServer/devops/drone?%s", encodeMemberListOptions(opts))
+	path, err := formatPath(s.client.paths.RepositoryList, encodeMemberListOptions(opts))
+	if err != nil {
+		return nil, nil, err
+	}
 	outs := new(repositories)
 	out := []*repository{}
 	res, err := s.client.do(ctx, "GET", path, nil, &outs)
 	out = convertRepositories(outs)
-	res.Page.Next = outs.NextPage
+	if res != nil {
+		res.Page.Next = outs.NextPage
+	}
 	return convertRepositoryList(out), res, err
 }
 
