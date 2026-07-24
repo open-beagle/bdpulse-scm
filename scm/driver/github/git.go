@@ -170,10 +170,15 @@ func convertBranchList(from []*branch) []*scm.Reference {
 }
 
 func convertBranch(from *branch) *scm.Reference {
+	updated := from.Commit.Commit.Committer.Date
+	if updated.IsZero() {
+		updated = from.Commit.Commit.Author.Date
+	}
 	return &scm.Reference{
-		Name: scm.TrimRef(from.Name),
-		Path: scm.ExpandRef(from.Name, "refs/heads/"),
-		Sha:  from.Commit.Sha,
+		Name:    scm.TrimRef(from.Name),
+		Path:    scm.ExpandRef(from.Name, "refs/heads/"),
+		Sha:     from.Commit.Sha,
+		Updated: updated,
 	}
 }
 

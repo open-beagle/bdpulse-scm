@@ -16,9 +16,10 @@ type (
 
 	// Reference represents a git reference.
 	Reference struct {
-		Name string
-		Path string
-		Sha  string
+		Name    string
+		Path    string
+		Sha     string
+		Updated time.Time
 	}
 
 	// ReferenceInput provides a SHA for creating a reference.

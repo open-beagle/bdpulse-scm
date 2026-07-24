@@ -144,9 +144,10 @@ func convertBranchList(src []*branch) []*scm.Reference {
 
 func convertBranch(src *branch) *scm.Reference {
 	return &scm.Reference{
-		Name: scm.TrimRef(src.Name),
-		Path: scm.ExpandRef(src.Name, "refs/heads/"),
-		Sha:  src.Commit.ID,
+		Name:    scm.TrimRef(src.Name),
+		Path:    scm.ExpandRef(src.Name, "refs/heads/"),
+		Sha:     src.Commit.ID,
+		Updated: src.Commit.Timestamp,
 	}
 }
 

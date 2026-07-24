@@ -114,8 +114,11 @@ func convertGroup(from *group) *scm.Group {
 type branch struct {
 	Name   string `json:"name"`
 	Commit struct {
-		ID string `json:"id"`
-	}
+		ID            string    `json:"id"`
+		AuthorDate    time.Time `json:"authored_date"`
+		CommittedDate time.Time `json:"committed_date"`
+		Created       time.Time `json:"created_at"`
+	} `json:"commit"`
 }
 
 type createBranch struct {
@@ -176,10 +179,18 @@ func convertBranchList(from []*branch) []*scm.Reference {
 }
 
 func convertBranch(from *branch) *scm.Reference {
+	updated := from.Commit.CommittedDate
+	if updated.IsZero() {
+		updated = from.Commit.AuthorDate
+	}
+	if updated.IsZero() {
+		updated = from.Commit.Created
+	}
 	return &scm.Reference{
-		Name: scm.TrimRef(from.Name),
-		Path: scm.ExpandRef(from.Name, "refs/heads/"),
-		Sha:  from.Commit.ID,
+		Name:    scm.TrimRef(from.Name),
+		Path:    scm.ExpandRef(from.Name, "refs/heads/"),
+		Sha:     from.Commit.ID,
+		Updated: updated,
 	}
 }
 
